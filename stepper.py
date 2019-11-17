@@ -1,25 +1,25 @@
 import RPi.GPIO as GPIO
 import time
 
-out1 = 13
-out2 = 11
-out3 = 15
-out4 = 12
-out5 = 5
-out6 = 10
-out7 = 3
-out8 = 7
-out9 = 16
-out10 = 22
-out11 = 8
-out12 = 18
-
-
-speedracer = 0.015
-
 
 def move_all_motors(out1, out2, out3, out4, out5, out6, out7, out8, out9, out10, out11, out12, speedracer, t):
 
+    # out1 = 13
+    # out2 = 11
+    # out3 = 15
+    # out4 = 12
+    # out5 = 5
+    # out6 = 10
+    # out7 = 3
+    # out8 = 7
+    # out9 = 16
+    # out10 = 22
+    # out11 = 8
+    # out12 = 18
+
+
+    # speedracer = 0.015
+    
     i = 0
     positive = 0
     negative = 0
