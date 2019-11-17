@@ -1,6 +1,7 @@
 import os
 import pygcode
 import xy_movement
+import stepper
 from tkinter import *
 
 def run_printer(stl_filename):
@@ -27,36 +28,11 @@ if __name__ == "__main__":
 
 	bh = 10 #button height
 	bw = 21 #button width
-
+	stepper.move_all_motors(13,11,15,12,5,10,3,7,16,22,8,18,0.7,1)
 	# leftbutt = Button()
 	# midbutt = Button()
 	# rightbutt = Button()
 	# xsensor = DistanceSensor(echo=,trigger=)
 	# ysensor = DistanceSensor(echo=,trigger=)
 
-	window = Tk()
-	window.title("Print food")
-	window.geometry('580x200')
-	# left = Button(window, height=bh, width=bw, text="select file to print")
-	# left.grid(column=0, row=0)
-	# mid = Button(window, height=bh, width=bw, text="adjust parameters")
-	# mid.grid(column=1, row=0)
-	# right = Button(window, height=bh, width=bw, text="right")
-	# right.grid(column=2, row=0)
-	#
-	# select = Button(window, height=bh, width=3*bw, text="select file to print")
-	# select.grid(column=0, row=0)
-
-	root = Tk()
-	e = Entry(root)
-	e.pack()
-
-
-	def callback(*args):
-		print(e.get())
-
-
-	e.bind("<Return>", callback)
-
-	root.mainloop()
-	window.mainloop()
+	
