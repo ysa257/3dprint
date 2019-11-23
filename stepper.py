@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 import time
 
 
-def move_all_motors(out1, out2, out3, out4, out5, out6, out7, out8, out9, out10, out11, out12, speedracer, t):
+def move_all_motors(out1, out2, out3, out4, out5, out6, out7, out8, out9, out10, out11, out12, speedracer, t, asd):
 
     # out1 = 13
     # out2 = 11
@@ -24,7 +24,7 @@ def move_all_motors(out1, out2, out3, out4, out5, out6, out7, out8, out9, out10,
     positive = 0
     negative = 0
     y = 0
-
+    start = time.time()
     GPIO.setmode(GPIO.BOARD)
     GPIO.setup(out1, GPIO.OUT)
     GPIO.setup(out2, GPIO.OUT)
@@ -42,7 +42,7 @@ def move_all_motors(out1, out2, out3, out4, out5, out6, out7, out8, out9, out10,
     print("First calibrate by giving some +ve and -ve values.....")
 
     try:
-        while (1):
+        while (1) and (time.time()-start<t):
             GPIO.output(out1, GPIO.LOW)
             GPIO.output(out2, GPIO.LOW)
             GPIO.output(out3, GPIO.LOW)
@@ -55,7 +55,7 @@ def move_all_motors(out1, out2, out3, out4, out5, out6, out7, out8, out9, out10,
             GPIO.output(out10, GPIO.LOW)
             GPIO.output(out11, GPIO.LOW)
             GPIO.output(out12, GPIO.LOW)
-            x = 80  # input()
+            x = asd*80  # input()
             if x > 0 and x <= 400:
                 for y in range(x, 0, -1):
                     if negative == 1:
