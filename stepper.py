@@ -611,7 +611,7 @@ def move_motor(out1,out2,out3,out4,speedracer,t, asd):
     print("First calibrate by giving some +ve and -ve values.....")
 
     try:
-        while (1):
+        while (1) and (time.time()-start<t):
             GPIO.output(out1, GPIO.LOW)
             GPIO.output(out2, GPIO.LOW)
             GPIO.output(out3, GPIO.LOW)
@@ -766,3 +766,26 @@ def move_motor(out1,out2,out3,out4,speedracer,t, asd):
 
     except KeyboardInterrupt:
         GPIO.cleanup()
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(prog="run stepper", description='Runs motors to desired position')
+    parser.add_argument('--x_motor', type=int)
+    parser.add_argument('--y_motor', type=int)
+    parser.add_argument('--E_motor', type=int)
+
+    args = parser.parse_args()
+ 
+    # Running the motors
+    x = args.x_motor
+    y = args.y_motor
+    E = args.E_motor
+    
+    #stepper.move_motor(10,15,11,12,0.05,5,1) # motor_y
+    #stepper.move_motor(5,3,8,7,0.05,5,-1) # motor_x
+    #stepper.move_motor(40,36,38,32,0.05,5,-1) #extrusion
+    
+    #if x and y and E:
+    
+
+
+    
