@@ -86,9 +86,9 @@ if __name__ == "__main__":
         #xy_movement.move_xy(x_des,y_des, E_des-E_new)
         
         #E_des = E_new
-    stepper.move_motor(10,15,11,12,0.05,5,-1) # motor_y
+    #stepper.move_motor(10,15,11,12,0.2,10,1) # motor_y
     #stepper.move_motor(5,3,8,7,0.05,5,-1) # motor_x, asdf=-1 makes x sensor distance greater
-    #stepper.move_motor(40,36,38,32,0.05,5,-1) #extrusion
+    stepper.move_motor(40,36,38,32,0.2,5,-1) #extrusion
     
 #    while True:
 #        print('xdist: ', x_sensor.distance*1000)

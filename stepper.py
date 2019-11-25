@@ -784,7 +784,11 @@ if __name__ == "__main__":
     #stepper.move_motor(5,3,8,7,0.05,5,-1) # motor_x
     #stepper.move_motor(40,36,38,32,0.05,5,-1) #extrusion
     
-    #if x and y and E:
+    #if x:
+        
+    #if y:
+                    
+    #if E:
     
 
 
