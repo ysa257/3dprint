@@ -769,63 +769,27 @@ def move_motor(out1,out2,out3,out4,speedracer,t, asd):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog="run stepper", description='Runs motors to desired position')
-
-    parser.add_argument('--x_motor',default=0, type=int)
-    parser.add_argument('--x_motor_direction',default=0, type=int)
-    parser.add_argument('--x_motor_duration',default=0, type=int)
-    parser.add_argument('--y_motor', default=0, type=int)
-    parser.add_argument('--y_motor_direction',default=0, type=int)
-    parser.add_argument('--y_motor_duration',default=0, type=int)
-    parser.add_argument('--E_motor', default=0,type=int)
-    parser.add_argument('--E_motor_direction',default=0, type=int)
-    parser.add_argument('--E_motor_duration',default=0, type=int)
+    parser.add_argument('--x_motor', type=int)
+    parser.add_argument('--y_motor', type=int)
+    parser.add_argument('--E_motor', type=int)
 
     args = parser.parse_args()
-
+ 
     # Running the motors
     x = args.x_motor
-    x_dir = args.x_motor_direction
-    x_dur = args.x_motor_duration
     y = args.y_motor
-    y_dir = args.y_motor_direction
-    y_dur = args.y_motor_duration
     E = args.E_motor
-    E_dir = args.E_motor_direction
-    E_dur = args.E_motor_duration
+    
+    #stepper.move_motor(10,15,11,12,0.05,5,1) # motor_y
+    #stepper.move_motor(5,3,8,7,0.05,5,-1) # motor_x
+    #stepper.move_motor(40,36,38,32,0.05,5,-1) #extrusion
+    
+    #if x:
+        
+    #if y:
+                    
+    #if E:
+    
 
-    # directions are  specified in conditionals of lines 28-36
-    # durations are specified in line 19 of xy_movement.py (currently 1s)
-    # speeds are specified below
 
-    speedracer_x = 0.2
-    speedracer_y = 0.2
-    speedracer_E = 0.6
-
-    command = "python3 "
-
-
-    count = 0
-    if x:
-        command = command + "run_x.py --dir=" + str(x_dir) + " --t=" + str(x_dur) + " --v=" + str(speedracer_x)
-
-        count += 1
-
-    if y:
-        if count == 0:
-            command = command + "run_y.py --dir=" + str(y_dir) + " --t=" + str(y_dur) + " --v=" + str(speedracer_y)
-
-        else:
-            command = command + " & python3 run_y.py --dir=" + str(y_dir) + " --t=" + str(y_dur) + " --v=" + str(speedracer_y)
-
-        count += 1
-
-    if E:
-        if count == 0:
-            command = command + "run_E.py --dir=" + str(E_dir) + " --t=" + str(E_dur) + " --v=" + str(speedracer_E)
-
-        else:
-            command = command + " & python3 run_E.py --dir=" + str(E_dir) + " --t=" + str(E_dur) + " --v=" + str(speedracer_E)
-
-        count += 1
-
-    os.run(command)
+    

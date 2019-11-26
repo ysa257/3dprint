@@ -1,11 +1,11 @@
 import os
 import pygcode
-# import xy_movement
-# import stepper
-# import RPi.GPIO as GPIO
+import xy_movement
+import stepper
+import RPi.GPIO as GPIO
 from time import sleep
 from tkinter import *
-# from sensortest import calculate_distance
+from sensortest import calculate_distance
 
 def scan_stl(stl_filename):
     gcode_filename = stl_filename[:-4] + ".gcode"
@@ -67,29 +67,28 @@ def scan_stl(stl_filename):
 
 if __name__ == "__main__":
     file = "fakebearing.STL"
-    coords = scan_stl(file)
+    #coords = scan_stl(file)
     E_des = 0
     GPIO.cleanup()
     GPIO.setmode(GPIO.BOARD)
-    coords
+    
 
     #x_sensor = DistanceSensor(echo=echo_pin_x,trigger=trigger_pin_x)
     #y_sensor = DistanceSensor(echo=echo_pin_y,trigger=trigger_pin_y)
 
     
-    for step in coords:
-        step
+    #for step in coords:
+        #step
 
-        x_des, y_des, E_new = coords[step]
+        #x_des, y_des, E_new = coords[step]
 
-        x_des 
-
-        xy_movement.move_xy(x_des,y_des, E_des-E_new)
-
-        E_des = E_new
-    #stepper.move_motor(10,15,11,12,0.2,10,1) # motor_y
+        
+        #xy_movement.move_xy(x_des,y_des, E_des-E_new)
+        
+        #E_des = E_new
+    stepper.move_motor(10,15,11,12,0.2,10,1) # motor_y
     #stepper.move_motor(5,3,8,7,0.05,5,-1) # motor_x, asdf=-1 makes x sensor distance greater
-    #stepper.move_motor(40,36,38,32,0.2,5,-1) #extrusion
+    #stepper.move_motor(40,36,38,32,0.2,5,1) #extrusion
     
 #    while True:
 #        print('xdist: ', x_sensor.distance*1000)

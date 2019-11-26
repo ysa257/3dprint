@@ -23,7 +23,7 @@ def calculate_distance(echo_pin,trigger_pin):
     #print("Ultrasonic Measurement")
 
     # Allow module to settle
-    time.sleep(0.01)
+    time.sleep(0.5)
 
     # Send 10us pulse to trigger
     GPIO.output(GPIO_TRIGGER, True)
@@ -53,5 +53,8 @@ def calculate_distance(echo_pin,trigger_pin):
 
     #print("Total distance :", distancet)
 
+
+    # Reset GPIO settings
+    GPIO.cleanup()
     
     return distance
