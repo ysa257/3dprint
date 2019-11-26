@@ -2,7 +2,7 @@ import stepper
 
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(prog="y-motor", description='Runs y-motor to desired position')
+    parser = argparse.ArgumentParser(prog="E-motor", description='Runs E-motor to desired position')
 
     parser.add_argument('--dir', type=int)
     parser.add_argument('--t', type=int)
@@ -14,4 +14,4 @@ if __name__ == "__main__":
     duration = args.t
     speed = args.v
 
-    stepper.move_motor(10,15,11,12,speed,duration,dir) # motor_y
+    stepper.move_motor(40,36,38,32,speed,duration,dir) #extrusion
