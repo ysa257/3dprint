@@ -5,7 +5,7 @@ import stepper
 import RPi.GPIO as GPIO
 from time import sleep
 from tkinter import *
-from sensortest import calculate_distance
+from sensortest import calculate_distance_5_times
 
 def scan_stl(stl_filename):
     gcode_filename = stl_filename[:-4] + ".gcode"
@@ -66,29 +66,100 @@ def scan_stl(stl_filename):
 
 
 if __name__ == "__main__":
-    file = "fakebearing.STL"
-    #coords = scan_stl(file)
+    file = "CatHeadTest.STL"
+    coords = scan_stl(file)
     E_des = 0
-    GPIO.cleanup()
+    #GPIO.cleanup()
     GPIO.setmode(GPIO.BOARD)
     
+    #GPIO.setup(10, GPIO.OUT)
+    #GPIO.setup(15, GPIO.OUT)
+    #GPIO.setup(11, GPIO.OUT)
+    #GPIO.setup(12, GPIO.OUT)
+    #GPIO.setup(5, GPIO.OUT)
+    #GPIO.setup(3, GPIO.OUT)
+    #GPIO.setup(8, GPIO.OUT)
+    #GPIO.setup(7, GPIO.OUT)
+    #GPIO.setup(40, GPIO.OUT)
+    #GPIO.setup(36, GPIO.OUT)
+    #GPIO.setup(38, GPIO.OUT)
+    #GPIO.setup(32, GPIO.OUT)
+    
+    #coords
 
     #x_sensor = DistanceSensor(echo=echo_pin_x,trigger=trigger_pin_x)
     #y_sensor = DistanceSensor(echo=echo_pin_y,trigger=trigger_pin_y)
 
+    #print(calculate_distance(29,31))
+    #print(calculate_distance(26,21))
+    #print(calculate_distance(26,21))
+    #print(calculate_distance(26,21))
+    #print(calculate_distance(26,21))
+    #print(calculate_distance(26,21))
+    #print(calculate_distance(26,21))
     
-    #for step in coords:
-        #step
+    echo_pin_x = 26
+    trigger_pin_x = 21
+    echo_pin_y = 29
+    trigger_pin_y = 31
+    #x_o = calculate_distance_5_times(echo_pin_x,trigger_pin_x)
+    #y_o = calculate_distance_5_times(echo_pin_y,trigger_pin_y)
+    #xy_movement.move_xy_5_sec()
+    #x_n = calculate_distance_5_times(echo_pin_x,trigger_pin_x)
+    #y_n = calculate_distance_5_times(echo_pin_y,trigger_pin_y)
+    v_x = 22.5
+    v_y = 2.25
+    #print(x_n-x_o)
+    #v_x = (x_n - x_o)/5
+    #v_y = (y_n - y_o)/5
+    
+    #v_x = 0.1
 
-        #x_des, y_des, E_new = coords[step]
 
+    for step in coords:
+        step
         
-        #xy_movement.move_xy(x_des,y_des, E_des-E_new)
+        if step<4:
+            if coords[step][0]!='':
+                x_des = coords[step][0]
+                x_old = x_des
+            if coords[step][1]!='':
+                y_des = coords[step][1]
+                y_old = y_des
+            if coords[step][2]!='':
+                E_des = coords[step][2]
+                E_old = E_des
+
+    
+                
+                
+                
+        if step>5:
+            print(x_old)
+            print(y_old)
+            print(E_old)
+            
+            x_des, y_des, E_des = coords[step]
+            
+            if coords[step][0] =='':
+                x_des = x_old
+            if coords[step][1]=='':
+                y_des = y_old
+            if coords[step][2]=='':
+                E_des = E_old
+            
+            x = x_des - x_old
+            y = y_des - y_old
+            E = E_des - E_old
         
-        #E_des = E_new
-    stepper.move_motor(10,15,11,12,0.2,10,1) # motor_y
+            xy_movement.move_xy(x,y,E,v_x,v_y)
+        
+            x_old = x_des
+            y_old = y_des
+            E_old = E_des
+    #stepper.move_motor(10,15,11,12,0.2,10,1) # motor_y
     #stepper.move_motor(5,3,8,7,0.05,5,-1) # motor_x, asdf=-1 makes x sensor distance greater
-    #stepper.move_motor(40,36,38,32,0.2,5,1) #extrusion
+    #stepper.move_motor(40,36,38,32,0.2,5,-1) #extrusion
     
 #    while True:
 #        print('xdist: ', x_sensor.distance*1000)

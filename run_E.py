@@ -1,17 +1,19 @@
 import stepper
+import argparse
 
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(prog="E-motor", description='Runs E-motor to desired position')
 
-    parser.add_argument('--dir', type=int)
-    parser.add_argument('--t', type=int)
-    parser.add_argument('--v', type=int)
+    parser.add_argument('--dir',default=1, type=int)
+    parser.add_argument('--t', default=0.1,type=float)
+    parser.add_argument('--v', default=0.7,type=float)
 
     args = parser.parse_args()
 
-    dir = args.dir
+    direct = args.dir
     duration = args.t
     speed = args.v
-
-    stepper.move_motor(40,36,38,32,speed,duration,dir) #extrusion
+    duration = 0.1
+    
+    stepper.move_motor(40,36,38,32,speed,duration,direct) #extrusion

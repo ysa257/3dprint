@@ -1,5 +1,7 @@
 import RPi.GPIO as GPIO
 import time
+import argparse
+import os
 
 def move_two_motors(out1, out2, out3, out4, out5, out6, out7, out8, speedracer, t, asd):
     i = 0
@@ -17,8 +19,7 @@ def move_two_motors(out1, out2, out3, out4, out5, out6, out7, out8, speedracer, 
     GPIO.setup(out7, GPIO.OUT)
     GPIO.setup(out8, GPIO.OUT)
 
-
-    print("First calibrate by giving some +ve and -ve values.....")
+    #print("First calibrate by giving some +ve and -ve values.....")
 
     try:
         while (1) and (time.time()-start<t):
@@ -299,7 +300,7 @@ def move_all_motors(out1, out2, out3, out4, out5, out6, out7, out8, out9, out10,
     GPIO.setup(out11, GPIO.OUT)
     GPIO.setup(out12, GPIO.OUT)
 
-    print("First calibrate by giving some +ve and -ve values.....")
+    #print("First calibrate by giving some +ve and -ve values.....")
 
     try:
         while (1) and (time.time()-start<t):
@@ -595,20 +596,21 @@ def move_all_motors(out1, out2, out3, out4, out5, out6, out7, out8, out9, out10,
         GPIO.cleanup()
 
 def move_motor(out1,out2,out3,out4,speedracer,t, asd):
-
     GPIO.setmode(GPIO.BOARD)
+
     GPIO.setup(out1, GPIO.OUT)
     GPIO.setup(out2, GPIO.OUT)
     GPIO.setup(out3, GPIO.OUT)
     GPIO.setup(out4, GPIO.OUT)
-
+    
     i = 0
     start = time.time()
     positive = 0
     negative = 0
     y = 0
+    step = 5 #initial use was 80
 
-    print("First calibrate by giving some +ve and -ve values.....")
+    #print("First calibrate by giving some +ve and -ve values.....")
 
     try:
         while (1) and (time.time()-start<t):
@@ -616,7 +618,7 @@ def move_motor(out1,out2,out3,out4,speedracer,t, asd):
             GPIO.output(out2, GPIO.LOW)
             GPIO.output(out3, GPIO.LOW)
             GPIO.output(out4, GPIO.LOW)
-            x = 80*asd  # input()
+            x = step*asd  # input()
             if x > 0 and x <= 400:
                 for y in range(x, 0, -1):
                     if negative == 1:
@@ -763,33 +765,77 @@ def move_motor(out1,out2,out3,out4,speedracer,t, asd):
                         continue
                     i = i - 1
 
-
+        
+        
     except KeyboardInterrupt:
         GPIO.cleanup()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog="run stepper", description='Runs motors to desired position')
-    parser.add_argument('--x_motor', type=int)
-    parser.add_argument('--y_motor', type=int)
-    parser.add_argument('--E_motor', type=int)
+
+    parser.add_argument('--x_motor',default=0, type=int)
+    parser.add_argument('--x_motor_direction',default=0, type=int)
+    parser.add_argument('--x_motor_duration',default=0, type=float)
+    parser.add_argument('--y_motor', default=0, type=int)
+    parser.add_argument('--y_motor_direction',default=0, type=int)
+    parser.add_argument('--y_motor_duration',default=0, type=float)
+    parser.add_argument('--E_motor', default=0,type=float)
+    parser.add_argument('--E_motor_direction',default=0, type=int)
+    parser.add_argument('--E_motor_duration',default=0, type=float)
 
     args = parser.parse_args()
- 
+
     # Running the motors
     x = args.x_motor
+    x_dir = args.x_motor_direction
+    x_dur = args.x_motor_duration
     y = args.y_motor
+    y_dir = args.y_motor_direction
+    y_dur = args.y_motor_duration
     E = args.E_motor
+    E_dir = args.E_motor_direction
+    E_dur = args.E_motor_duration
+
+    # directions are  specified in conditionals of lines 28-36
+    # durations are specified in line 19 of xy_movement.py (currently 1s)
+    # speeds are specified below
+
+    speedracer_x = 0.001
+    speedracer_y = 0.001
+    speedracer_E = 0.3
+
+    command = "python3 "
+
     
-    #stepper.move_motor(10,15,11,12,0.05,5,1) # motor_y
-    #stepper.move_motor(5,3,8,7,0.05,5,-1) # motor_x
-    #stepper.move_motor(40,36,38,32,0.05,5,-1) #extrusion
-    
-    #if x:
-        
-    #if y:
-                    
+
+    count = 0
+    if x:
+        dur = str(x_dur)
+        command = command + "run_x.py --dir=" + str(x_dir) + " --t=" + dur + " --v=" + str(speedracer_x)
+
+        count += 1
+
+    if y:
+        dur = str(y_dur)
+        if count == 0:
+            command = command + "run_y.py --dir=" + str(y_dir) + " --t=" + (dur) + " --v=" + str(speedracer_y)
+
+        else:
+            command = command + " & python3 run_y.py --dir=" + str(y_dir) + " --t=" + (dur) + " --v=" + str(speedracer_y)
+
+        count += 1
+
     #if E:
-    
+    #    dur = str(E_dur)
+    #    if count == 0:
+    #        command = command + "run_E.py --dir=" + str(E_dir) + " --t=" +(dur) + " --v=" + str(speedracer_E)#
 
+    #    else:
+    #        command = command + " & python3 run_E.py --dir=" + str(E_dir) + " --t=" + (dur) + " --v=" + str(speedracer_E)
 
-    
+    #    count += 1
+        
+    if command!="python3 ":
+        print(command)
+        os.system(command)
+        #os.system('python3 run_E.py --dir=1 --t=0.5 --v=0.7')
